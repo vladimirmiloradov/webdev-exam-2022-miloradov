@@ -1,0 +1,61 @@
+header {
+    background-color: rgb(122, 31, 31);
+}
+.navbar-group {
+    float: left;
+    display: flex;
+    margin: 0 -5px;
+}
+.nav-item {
+    flex: 1 1 auto;
+    margin: 0 5px;
+}
+.main-cont {
+    margin: 0;
+    padding: 0;
+}
+.my-carousel {
+    padding: 0;
+}
+.my-carousel .carousel-item {
+    display: flex;
+    max-height: 500px;
+}
+.carousel-item {
+    height: 32rem;
+    background-color:  #000;
+    color:white;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+}
+.carousel-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 50px;
+}
+.overlay-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: .4;
+}
+.heading-line {
+    height: 3px;
+    width: 576px;
+    background-color: #00F;
+    max-width: 80%;
+}
+.service-images {
+    width: 200px;
+    max-width: 30%;
+}
+.choice {
+    border: 1px solid black;
+}
