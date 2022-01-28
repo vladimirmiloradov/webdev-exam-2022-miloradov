@@ -49,7 +49,7 @@ header {
 .heading-line {
     height: 3px;
     width: 576px;
-    background-color: #00F;
+    background-color: rgb(122, 31, 31);
     max-width: 80%;
 }
 .service-images {
@@ -58,4 +58,8 @@ header {
 }
 .choice {
     border: 1px solid black;
+}
+
+.menu-card {
+    margin: 20px;
 }

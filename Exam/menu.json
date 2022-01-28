@@ -1,0 +1,52 @@
+[
+  {
+    "menuName": "Пицца",
+    "menuDesc": "Мы предлагаем множество видов пицц с различными вкусами: от известных Пепперони до необычных Тропических.",
+    "menuImage": "./images/pizza.jpeg"
+  },
+  {
+    "menuName": "Суши",
+    "menuDesc": "Разичные виды суши с многообразием вкусов и большими граммовками!",
+    "menuImage": "./images/sushi.jpeg"
+  },
+  {
+    "menuName": "Салаты",
+    "menuDesc": "Свежие салаты, от классических до самых изысканных.",
+    "menuImage": "./images/salad.jpg"
+  },
+  {
+    "menuName": "Бургеры",
+    "menuDesc": "Широкий выбор бургеров, в том числе крафтовые бургеры.",
+    "menuImage": "./images/burgers.jpg"
+  },
+  {
+    "menuName": "Напитки",
+    "menuDesc": "Большой ассортимент соков, лимонадов и газированных напитков.",
+    "menuImage": "./images/drinks.jpg"
+  },
+  {
+    "menuName": "Закуски",
+    "menuDesc": "Хрустящие снэки отлично дополнят ваш заказ!",
+    "menuImage": "./images/snacks.jpg"
+  },
+  {
+    "menuName": "Десерты",
+    "menuDesc": "Торты, пироги и пирожные с различными вкусами.",
+    "menuImage": "./images/desserts.jpg"
+  },
+  {
+    "menuName": "Супы",
+    "menuDesc": "Множество горячих супов русской традиционной кухни.",
+    "menuImage": "./images/soup.jpg"
+  },
+  {
+    "menuName": "Морепродукты",
+    "menuDesc": "Любители морепродуктов точно найдут для себя что-то особенное.",
+    "menuImage": "./images/seafish.jpg"
+  },
+  {
+    "menuName": "Сэндвичи",
+    "menuDesc": "Различные сэндвичи с возможностью добавления ингридиентов",
+    "menuImage": "./images/sandwich.jpg"
+  }
+]
