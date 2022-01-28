@@ -63,3 +63,19 @@ header {
 .menu-card {
     margin: 20px;
 }
+
+.final-cost {
+    font-weight: bold;
+}
+
+.choosen-dish {
+    height: 80px;
+}
+
+.footer {
+    background-color: rgb(122, 31, 31);
+}
+
+.footer-text {
+    color: white;
+}

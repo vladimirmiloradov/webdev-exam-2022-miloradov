@@ -471,7 +471,19 @@ function clickHandlerSearchBtn() {
 async function downloadPlaceById(id) {
     let url = "http://exam-2022-1-api.std-900.ist.mospolytech.ru/api/restaurants/" + id + "?api_key=4f587354-f61f-4f48-bd35-80a1f1b0706a";
     let jsonData = await ServerRequest(url);
+    setSocialDiscountCheckbox(jsonData);
     return jsonData;
+}
+
+function setSocialDiscountCheckbox(jsonData) {
+    if (jsonData.socialPrivileges == true) {
+        document.getElementById('Discount').setAttribute('checked', 'true');
+        document.getElementById('Discount').removeAttribute('disabled');
+    }
+    else {
+        document.getElementById('Discount').setAttribute('disabled', 'true');
+        document.getElementById('Discount').removeAttribute('checked');
+    }
 }
 
 ///////////////////////////////////////////////////////////
@@ -526,6 +538,7 @@ function takeJsonInfo(arrayPrices) {
 }
 
 function renderMenu(arrayPrices, menuData) {
+    document.querySelector('.menu-section').classList.remove('d-none');
     let menuWindow = document.getElementById('menu');
     menuWindow.innerHTML = '';
     let k = 0;
@@ -538,6 +551,48 @@ function renderMenu(arrayPrices, menuData) {
         cardMenu.querySelector('.card-cost').innerHTML = arrayPrices[k];
         k++;
         menuWindow.appendChild(cardMenu);
+    }
+    plusCost();
+    minusCost();
+}
+
+/////////////////////////////////////////////////////////////
+//////Обработчики для кнопок увеличения/уменьшения меню//////
+/////////////////////////////////////////////////////////////
+
+function plusCost() {
+    for (let btn of document.querySelectorAll('.btn-plus')) {
+        btn.onclick = clickHandlerPlusCostBtn;
+    }
+}
+
+function minusCost() {
+    for (let btn of document.querySelectorAll('.btn-minus')) {
+        btn.onclick = clickHandlerMinusCostBtn;
+    }
+}
+
+///////////////////////////////////////////////////////
+//////Функции увеличения/уменьшения итоговой цены//////
+///////////////////////////////////////////////////////
+
+function clickHandlerPlusCostBtn(event) {
+    document.querySelector('.btn-order').removeAttribute('disabled');
+    event.target.parentNode.querySelector('.input').stepUp();
+    let closestCard = event.target.closest('.card-body');
+    let costMenu = closestCard.querySelector('.card-cost').innerHTML;
+    document.getElementById('final-cost').innerHTML = +document.getElementById('final-cost').innerHTML + +costMenu;
+}
+
+function clickHandlerMinusCostBtn(event) {
+    if (event.target.parentNode.querySelector('.input').value != 0) {
+        event.target.parentNode.querySelector('.input').stepDown();
+        let closestCard = event.target.closest('.card-body');
+        let costMenu = closestCard.querySelector('.card-cost').innerHTML;
+        document.getElementById('final-cost').innerHTML = +document.getElementById('final-cost').innerHTML - +costMenu;
+    }
+    if (document.getElementById('final-cost').innerHTML == 0) {
+        document.querySelector('.btn-order').setAttribute('disabled', 'true');
     }
 }
 
