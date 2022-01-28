@@ -475,6 +475,10 @@ async function downloadPlaceById(id) {
     return jsonData;
 }
 
+///////////////////////////////////////////////////////////////////////////
+//////Добавление/удаление атрибута checked в чекбоксе для соц. скидок//////
+///////////////////////////////////////////////////////////////////////////
+
 function setSocialDiscountCheckbox(jsonData) {
     if (jsonData.socialPrivileges == true) {
         document.getElementById('Discount').setAttribute('checked', 'true');
@@ -491,11 +495,12 @@ function setSocialDiscountCheckbox(jsonData) {
 ///////////////////////////////////////////////////////////
 
 function clickHandlerChoiceBtn(event) {
+    document.getElementById('final-cost').innerHTML = 0;
     let placeRow = event.target.closest('.place-row');
     let rowId = placeRow.getAttribute('place-id');
     downloadPlaceById(rowId)
         .then(menuItem => takePricesById(menuItem))
-        .then(arrayPrices => takeJsonInfo(arrayPrices));
+        .then(arrayPrices => takeJsonInfo(arrayPrices, rowId));
 }
 
 ////////////////////////////////////////////////////////////
@@ -531,13 +536,13 @@ function takePricesById(data) {
 //////Создание карточек//////
 /////////////////////////////
 
-function takeJsonInfo(arrayPrices) {
+function takeJsonInfo(arrayPrices, rowId) {
     let url = './menu.json';
     downloadForm(url)
-        .then(menuData => renderMenu(arrayPrices, menuData));
+        .then(menuData => renderMenu(arrayPrices, menuData, rowId));
 }
 
-function renderMenu(arrayPrices, menuData) {
+function renderMenu(arrayPrices, menuData, rowId) {
     document.querySelector('.menu-section').classList.remove('d-none');
     let menuWindow = document.getElementById('menu');
     menuWindow.innerHTML = '';
@@ -545,6 +550,7 @@ function renderMenu(arrayPrices, menuData) {
     for (let data of menuData) {
         let cardMenu = document.querySelector('.template-card').cloneNode(true);
         cardMenu.classList.remove('d-none');
+        cardMenu.classList.add('cardMenu');
         cardMenu.querySelector('.card-img-top').setAttribute('src', data.menuImage)
         cardMenu.querySelector('.card-title').innerHTML = data.menuName;
         cardMenu.querySelector('.card-text').innerHTML = data.menuDesc;
@@ -554,7 +560,62 @@ function renderMenu(arrayPrices, menuData) {
     }
     plusCost();
     minusCost();
+    document.querySelector('.btn-order').onclick = function () {
+        clickHandlerPrepareModalContent(rowId);
+    }
 }
+
+////////////////////////////////////////////////////////////////////
+//////Подготовка данных для модального окна оформления заказов//////
+////////////////////////////////////////////////////////////////////
+
+
+function clickHandlerPrepareModalContent(rowId) {
+    let choosenDishes = document.querySelector('.choosen-dishes'); // родитель всех позиций заказа
+    choosenDishes.innerHTML = '';
+    let choosenDish = document.querySelectorAll('.cardMenu');
+    for (let dish of choosenDish) {
+        if (dish.querySelector('.input').value != 0) {
+            let modalCard = document.querySelector('.template-choosen-dish').cloneNode(true);
+            modalCard.classList.remove('d-none', '.template-choosen-dish');
+            let img = dish.querySelector('.card-img-top').getAttribute('src'); // берем катинку из меню
+            modalCard.querySelector('.cardMenuImg').setAttribute('src', img); // отправляем картинку из меню в модальное окно
+            modalCard.querySelector('.cardMenuTitle').innerHTML = dish.querySelector('.card-title').innerHTML;
+            if (document.getElementById('bigOrder').checked){
+                modalCard.querySelector('.cardMenuPrice').innerHTML = dish.querySelector('.card-cost').innerHTML + 'x' + dish.querySelector('.input').value*5;
+            }
+            else {
+                modalCard.querySelector('.cardMenuPrice').innerHTML = dish.querySelector('.card-cost').innerHTML + 'x' + dish.querySelector('.input').value;
+            }
+            modalCard.querySelector('.cardMenuTotalPrice').innerHTML = +dish.querySelector('.card-cost').innerHTML * +dish.querySelector('.input').value;
+            choosenDishes.appendChild(modalCard);
+        }
+    }
+    downloadPlaceById(rowId)
+        .then(data => renderModal(data));
+}
+
+function renderModal(jsonData) {
+    document.querySelector('.modal-name').innerHTML = jsonData.name;
+    document.querySelector('.modal-okrug').innerHTML = jsonData.admArea;
+    document.querySelector('.modal-raion').innerHTML = jsonData.district;
+    document.querySelector('.modal-address').innerHTML = jsonData.address;
+    document.getElementById('final-end-cost').innerHTML = document.getElementById('final-cost').innerHTML;
+    if (document.getElementById('Discount').checked) {
+        document.getElementById('socialDiscountAvailability').innerHTML = 'Скидка '+jsonData.socialDiscount+'%';
+        document.getElementById('final-end-cost').innerHTML = document.getElementById('final-end-cost').innerHTML * (100 - +jsonData.socialDiscount) / 100;
+    } else {
+        document.getElementById('socialDiscountAvailability').innerHTML = 'Нет';
+    }
+
+    if (document.getElementById('bigOrder').checked) {
+        document.getElementById('bigOrderAvailability').innerHTML = 'Число сетов увеличено в 5 раз, стоимость заказа увеличена в 2,5 раза';
+        document.getElementById('final-end-cost').innerHTML = document.getElementById('final-end-cost').innerHTML * 2.5;
+    } else {
+        document.getElementById('bigOrderAvailability').innerHTML = 'Нет';
+    }
+}
+
 
 /////////////////////////////////////////////////////////////
 //////Обработчики для кнопок увеличения/уменьшения меню//////
