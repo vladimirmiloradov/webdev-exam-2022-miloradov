@@ -210,10 +210,10 @@
                     <h5 class="card-cost text-center fw-bold">100 P</h5>
                     <div class="d-flex justify-content-center align-items-center">
                         <button class="btn btn-outline-dark btn-sm btn-minus">
-                            <</button>
+                            &lt;</button>
                                 <input class="quantity w-25 input" min="0" name="quantity" value="0" type="number"
                                     disabled>
-                                <button class="btn btn-outline-dark btn-sm btn-plus">></button>
+                                <button class="btn btn-outline-dark btn-sm btn-plus">&gt;</button>
                     </div>
                 </div>
             </div>
@@ -284,11 +284,19 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Отмена</button>
-                                    <button type="button" class="btn btn-primary">Подтвердить</button>
+                                    <button type="button" class="btn btn-primary accept-order" data-bs-dismiss="modal">Подтвердить</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="alerts">
+                <div class="alert alert-success alert-dismissible fade show alert-template d-none container" role="alert">
+                    <span class="msg">
+                        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                    </span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
         </section>

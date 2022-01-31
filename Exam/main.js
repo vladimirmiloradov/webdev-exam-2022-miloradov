@@ -657,6 +657,19 @@ function clickHandlerMinusCostBtn(event) {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//////Алёрт при нажатии "подтвердить" в модальном окне оформления заказа//////
+//////////////////////////////////////////////////////////////////////////////
+
+
+function showAlert() {
+    let alerts = document.querySelector('.alerts');
+    let newAlertElement = document.querySelector('.alert-template').cloneNode(true);
+    newAlertElement.querySelector('.msg').innerHTML = "Заказ успешно оформлен!";
+    newAlertElement.classList.remove('d-none');
+    alerts.append(newAlertElement);
+}
+
 //////////////////////
 //////Обработчик//////
 //////////////////////
@@ -670,4 +683,6 @@ window.onload = function () {
         .then(() => takeIdOfPlace());
     let searchBtn = document.querySelector('.search-btn');
     searchBtn.addEventListener('click', clickHandlerSearchBtn);
+    let acceptBtn = document.querySelector('.accept-order');
+    acceptBtn.addEventListener('click', showAlert);
 }
